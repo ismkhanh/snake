@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import * as Haptics from 'expo-haptics';
 import { LayoutChangeEvent } from 'react-native';
-import { Gesture } from 'react-native-gesture-handler';
-import { GestureUpdateEvent } from 'react-native-gesture-handler';
+import { Gesture, GestureUpdateEvent } from 'react-native-gesture-handler';
 import { Direction, GameState, GameAction, GestureEventType } from '../types/types';
 import { checkGameOver } from '../utils/checkGameOver';
 import { getSnakeDirection } from '../utils/getSnakeDirection';

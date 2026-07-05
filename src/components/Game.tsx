@@ -40,7 +40,7 @@ export default function Game(): JSX.Element {
         } else {
             setIsNewHighScore(false);
         }
-    }, [isGameOver]);
+    }, [isGameOver, score, highScore]);
 
     const handlePlayAgain = useCallback(() => {
         setIsNewHighScore(false);

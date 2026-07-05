@@ -12,7 +12,7 @@ interface GameCanvasProps {
 const FOOD_RADIUS = 10;
 const SEGMENT_RADIUS = 7;
 
-const GameCanvas = React.memo(({ snake, food }: GameCanvasProps) => {
+const GameCanvas = React.memo(function GameCanvas({ snake, food }: GameCanvasProps) {
     return (
         <Canvas style={{ flex: 1 }}>
             {snake.map((segment, index) => (
