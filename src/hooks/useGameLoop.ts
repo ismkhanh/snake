@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import * as Haptics from 'expo-haptics';
 import { LayoutChangeEvent } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import { GestureUpdateEvent } from 'react-native-gesture-handler';
@@ -90,8 +91,16 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 export function useGameLoop() {
     const [state, dispatch] = useReducer(gameReducer, initialState);
     const directionRef = useRef<Direction>(Direction.Right);
+    const prevScoreRef = useRef(state.score);
     const stateRef = useRef(state);
     stateRef.current = state;
+
+    useEffect(() => {
+        if (state.score > prevScoreRef.current) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
+        prevScoreRef.current = state.score;
+    }, [state.score]);
 
     useEffect(() => {
         let lastTime = 0;
@@ -177,6 +186,7 @@ export function useGameLoop() {
         food: state.food,
         score: state.score,
         isPaused: state.isPaused,
+        isGameOver: state.isGameOver,
         gameBounds: state.gameBounds,
         panGesture,
         pauseGame,
