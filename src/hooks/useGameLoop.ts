@@ -15,7 +15,7 @@ import {
     CELL_SIZE,
 } from '../constants/game';
 
-const initialState: GameState = {
+export const initialState: GameState = {
     snake: SNAKE_INITIAL_POSITION,
     food: FOOD_INITIAL_POSITION,
     isGameOver: false,
@@ -24,7 +24,7 @@ const initialState: GameState = {
     gameBounds: { xMin: 0, xMax: 0, yMin: 0, yMax: 0 },
 };
 
-function gameReducer(state: GameState, action: GameAction): GameState {
+export function gameReducer(state: GameState, action: GameAction): GameState {
     switch (action.type) {
         case 'TICK': {
             if (state.isGameOver || state.isPaused) return state;
