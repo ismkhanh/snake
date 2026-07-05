@@ -5,13 +5,16 @@ A classic Snake game built with React Native and Expo. Uses Skia for high-perfor
 ![React Native](https://img.shields.io/badge/React_Native-0.81-blue)
 ![Expo](https://img.shields.io/badge/Expo-54-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
-![Tests](https://img.shields.io/badge/Tests-31_passing-green)
+![Tests](https://img.shields.io/badge/Tests-38_passing-green)
 
 ## Tech Stack
 
 - **React Native** with Expo (SDK 54)
 - **@shopify/react-native-skia** for canvas rendering
 - **react-native-gesture-handler** for swipe controls
+- **react-native-fast-confetti** for new-high-score celebration
+- **@react-native-async-storage/async-storage** for high score persistence
+- **expo-haptics** for haptic feedback on eating food
 - **useReducer** for state management
 - **Jest + jest-expo** for testing
 
@@ -43,15 +46,17 @@ Currently covers:
 - Food spawning logic
 - Game reducer (tick, pause, reload, bounds)
 - Eat detection with distance thresholds
+- Snake direction inference
 
 ## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── Game.tsx          # Main game screen, composes all UI
-│   ├── GameCanvas.tsx    # Skia canvas rendering snake + food
-│   └── Header.tsx        # Score display, pause/reload controls
+│   ├── Game.tsx           # Main game screen, composes all UI
+│   ├── GameCanvas.tsx     # Skia canvas rendering snake + food
+│   ├── GameOverModal.tsx  # Game over dialog with confetti
+│   └── Header.tsx         # Score display, pause/reload controls
 ├── constants/
 │   └── game.ts           # Tuning values (cell size, speed, score)
 ├── hooks/
@@ -63,7 +68,9 @@ src/
 └── utils/
     ├── checkEatFood.ts       # Distance-based eat detection
     ├── checkGameOver.ts      # Wall + self-collision checks
-    └── randomFoodPosition.ts # Food placement avoiding snake body
+    ├── getSnakeDirection.ts   # Infer direction from head/neck segments
+    ├── randomFoodPosition.ts # Food placement avoiding snake body
+    └── storage.ts            # AsyncStorage high score persistence
 ```
 
 ## Architecture
