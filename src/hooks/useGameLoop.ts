@@ -4,6 +4,7 @@ import { Gesture } from 'react-native-gesture-handler';
 import { GestureUpdateEvent } from 'react-native-gesture-handler';
 import { Direction, GameState, GameAction, GestureEventType } from '../types/types';
 import { checkGameOver } from '../utils/checkGameOver';
+import { getSnakeDirection } from '../utils/getSnakeDirection';
 import { checkEatFood } from '../utils/checkEatFood';
 import { randomFoodPosition } from '../utils/randomFoodPosition';
 import {
@@ -34,16 +35,33 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
             }
 
             const head = state.snake[0];
+            let direction = action.direction;
+
+            // Prevent reversal based on actual snake orientation,
+            // not the gesture ref which can change multiple times between ticks
+            const actualDirection = getSnakeDirection(state.snake);
+            if (actualDirection !== null) {
+                const opposites: Record<Direction, Direction> = {
+                    [Direction.Up]: Direction.Down,
+                    [Direction.Down]: Direction.Up,
+                    [Direction.Left]: Direction.Right,
+                    [Direction.Right]: Direction.Left,
+                };
+                if (direction === opposites[actualDirection]) {
+                    direction = actualDirection;
+                }
+            }
+
             const newHead = { ...head };
 
-            switch (action.direction) {
+            switch (direction) {
                 case Direction.Up: newHead.y -= 1; break;
                 case Direction.Down: newHead.y += 1; break;
                 case Direction.Left: newHead.x -= 1; break;
                 case Direction.Right: newHead.x += 1; break;
             }
 
-            if (checkEatFood(newHead, state.food, 2)) {
+            if (checkEatFood(newHead, state.food, 1)) {
                 const newSnake = [newHead, ...state.snake];
                 return {
                     ...state,
@@ -120,6 +138,12 @@ export function useGameLoop() {
 
     const handleGesture = useCallback((event: GestureUpdateEvent<GestureEventType>) => {
         const { translationX, translationY } = event;
+
+        // Ignore near-zero translations at gesture start; without this,
+        // the first onUpdate event (≈0,0) falls into the vertical branch
+        // and falsely sets the direction to Up.
+        if (Math.abs(translationX) < 5 && Math.abs(translationY) < 5) return;
+
         const current = directionRef.current;
 
         if (Math.abs(translationX) > Math.abs(translationY)) {

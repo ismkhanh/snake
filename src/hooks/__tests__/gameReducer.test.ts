@@ -98,6 +98,38 @@ describe('gameReducer', () => {
             const next = gameReducer(state, { type: 'TICK', direction: Direction.Right });
             expect(next.isGameOver).toBe(true);
         });
+
+        it('prevents direction reversal into own body', () => {
+            // Snake moving right: head(6,5) neck(5,5) tail(4,5)
+            const state = stateWith({
+                snake: [
+                    { x: 6, y: 5 },
+                    { x: 5, y: 5 },
+                    { x: 4, y: 5 },
+                ],
+                food: { x: 19, y: 19 },
+            });
+            // Request Left (opposite of Right) — should be rejected
+            const next = gameReducer(state, { type: 'TICK', direction: Direction.Left });
+            // Snake should continue Right instead of reversing
+            expect(next.snake[0]).toEqual({ x: 7, y: 5 });
+        });
+
+        it('prevents reversal via intermediate direction change', () => {
+            // Snake moving down: head(5,7) neck(5,6) tail(5,5)
+            const state = stateWith({
+                snake: [
+                    { x: 5, y: 7 },
+                    { x: 5, y: 6 },
+                    { x: 5, y: 5 },
+                ],
+                food: { x: 19, y: 19 },
+            });
+            // Request Up (opposite of Down) — should be rejected
+            const next = gameReducer(state, { type: 'TICK', direction: Direction.Up });
+            // Snake should continue Down
+            expect(next.snake[0]).toEqual({ x: 5, y: 8 });
+        });
     });
 
     describe('TOGGLE_PAUSE', () => {
