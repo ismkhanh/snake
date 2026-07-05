@@ -1,4 +1,4 @@
-import { JSX, useCallback, useEffect, useState } from 'react';
+import { JSX, useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GestureDetector } from 'react-native-gesture-handler';
@@ -23,24 +23,29 @@ export default function Game(): JSX.Element {
         onBoundariesLayout,
     } = useGameLoop();
 
+    const highScoreRef = useRef(0);
     const [highScore, setHighScoreState] = useState(0);
     const [isNewHighScore, setIsNewHighScore] = useState(false);
 
     useEffect(() => {
-        getHighScore().then(setHighScoreState);
+        getHighScore().then((val) => {
+            highScoreRef.current = val;
+            setHighScoreState(val);
+        });
     }, []);
 
     useEffect(() => {
         if (!isGameOver) return;
 
-        if (score > highScore) {
+        if (score > highScoreRef.current) {
+            highScoreRef.current = score;
             setHighScoreState(score);
             setIsNewHighScore(true);
             setHighScore(score);
         } else {
             setIsNewHighScore(false);
         }
-    }, [isGameOver, score, highScore]);
+    }, [isGameOver, score]);
 
     const handlePlayAgain = useCallback(() => {
         setIsNewHighScore(false);

@@ -1,6 +1,6 @@
 import { JSX, useRef, useEffect } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Confetti, ConfettiMethods } from 'react-native-fast-confetti';
+import { CannonConfetti, CannonConfettiMethods } from 'react-native-fast-confetti';
 import { Colors } from '../styles/colors';
 
 type Props = {
@@ -18,7 +18,7 @@ export default function GameOverModal({
     isNewHighScore,
     onPlayAgain,
 }: Props): JSX.Element {
-    const confettiRef = useRef<ConfettiMethods>(null);
+    const confettiRef = useRef<CannonConfettiMethods>(null);
 
     useEffect(() => {
         if (visible && isNewHighScore) {
@@ -35,10 +35,11 @@ export default function GameOverModal({
         >
             <View style={styles.overlay}>
                 {isNewHighScore && (
-                    <Confetti
+                    <CannonConfetti
                         ref={confettiRef}
-                        count={150}
+                        autoplay
                         fadeOutOnEnd
+                        gravity={3}
                         colors={[
                             Colors.tertiary,
                             Colors.secondary,
@@ -47,7 +48,18 @@ export default function GameOverModal({
                             '#ef4444',
                         ]}
                         containerStyle={StyleSheet.absoluteFill}
-                    />
+                    >
+                        <CannonConfetti.Origin
+                            position="bottom-left"
+                            count={100}
+                            initialSpeed={3}
+                        />
+                        <CannonConfetti.Origin
+                            position="bottom-right"
+                            count={100}
+                            initialSpeed={3}
+                        />
+                    </CannonConfetti>
                 )}
                 <View style={styles.dialog}>
                     <Text style={styles.title}>
