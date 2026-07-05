@@ -85,3 +85,9 @@ The game state is managed by a pure reducer (`gameReducer`) that handles four ac
 | `SET_BOUNDS` | Update playfield dimensions from layout |
 
 The game loop runs via `requestAnimationFrame` with a fixed-timestep accumulator to ensure consistent tick rate regardless of frame rate. All game logic (collision detection, food spawning) is extracted into pure utility functions for testability.
+
+## Demo
+
+https://github.com/user-attachments/assets/f84e5976-9a70-4332-ae56-20fac2c29355
+
+
