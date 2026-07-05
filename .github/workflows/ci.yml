@@ -51,3 +51,5 @@ jobs:
 
       - name: Build
         run: eas build --platform all --non-interactive --no-wait
+        env:
+          EAS_BUILD_NO_EXPO_GO_WARNING: true
