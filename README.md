@@ -37,7 +37,7 @@ npm run android
 npm test
 ```
 
-31 unit tests covering:
+Currently covers:
 
 - Collision detection (walls + self)
 - Food spawning logic
