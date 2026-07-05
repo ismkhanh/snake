@@ -26,6 +26,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e262759a-d7ca-4524-baf3-cfbe3c924ab9"
+      }
+    },
+    "owner": "ismkhan"
   }
 }
