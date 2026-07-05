@@ -49,7 +49,7 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Build Production (AAB)
+      - name: Build Production (AAB + iOS)
         run: eas build --profile production --platform all --non-interactive --no-wait
         env:
           EAS_BUILD_NO_EXPO_GO_WARNING: true
