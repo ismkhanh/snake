@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "snake",
+    "name": "Snake",
     "slug": "snake",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/iconv2.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/iconv2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4ea246"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.ismkhan.snake",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -21,8 +21,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/iconv2.png",
+        "backgroundColor": "#4ea246"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
