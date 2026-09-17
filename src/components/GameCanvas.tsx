@@ -9,7 +9,7 @@ interface GameCanvasProps {
     food: Coordinates;
 }
 
-const FOOD_RADIUS = 10;
+const FOOD_RADIUS = SEGMENT_SIZE / 2;
 const SEGMENT_RADIUS = 7;
 
 const GameCanvas = React.memo(function GameCanvas({ snake, food }: GameCanvasProps) {
@@ -27,8 +27,8 @@ const GameCanvas = React.memo(function GameCanvas({ snake, food }: GameCanvasPro
                 />
             ))}
             <Circle
-                cx={food.x * CELL_SIZE + FOOD_RADIUS}
-                cy={food.y * CELL_SIZE + FOOD_RADIUS}
+                cx={food.x * CELL_SIZE + SEGMENT_SIZE / 2}
+                cy={food.y * CELL_SIZE + SEGMENT_SIZE / 2}
                 r={FOOD_RADIUS}
                 color={Colors.tertiary}
             />
